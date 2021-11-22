@@ -5,6 +5,7 @@
 html {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 14px;
+    user-select: none;
 }
 
 body {
@@ -131,6 +132,7 @@ a {
 
 .mid-message strong {
     color: rgb(29,29,31);
+    display:block;
 }
 
 .canvas-caption {
