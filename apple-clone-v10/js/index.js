@@ -51,7 +51,15 @@
             sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
         }
 
-        console.log(sceneInfo);
+        let totalScrollHeight=0;
+        for (let i = 0; i<sceneInfo.length; i++) {
+            totalScrollHeight +=sceneInfo[i].scrollHeight;
+            if(totalScrollHeight >= YOffset) {
+                currentScene = i;
+                break;
+            }
+        }
+        document.body.setAttribute('id', `show-scene-${currentScene}`);
     }
 
     
@@ -63,19 +71,24 @@
         if(YOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
             currentScene++;
             console.log(currentScene);
+            document.body.setAttribute('id', `show-scene-${currentScene}`)
         }
         if(YOffset < prevScrollHeight) {
             currentScene--;
             console.log(currentScene);
+            document.body.setAttribute('id', `show-scene-${currentScene}`)
         }
+        
+
+        
     }
 
-    window.addEventListener('resize', setLayout);
     window.addEventListener('scroll', () => {
         YOffset = window.pageYOffset;
         scrollLoop();
     })
-
-    setLayout();
+    // window.addEventListener('DOMcontentLoaded', setLayout) 실행 시점이 load보다 빠름 이미지가 로드 되기 전에 HTML 돔 구조만 끝나면 로드를 시작하기 때문에..
+    window.addEventListener('load', setLayout);
+    window.addEventListener('resize', setLayout);
 
 })();
