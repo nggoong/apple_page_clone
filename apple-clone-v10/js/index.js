@@ -20,16 +20,26 @@
             }, 
             values : {
                 messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
-                messageA_translateY_in: [20, 0, { start: 0.1, end: 0.2 }],
-                // messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
-                messageA_opacity_out: [1, 0, { start: 0.25, end: 0.3 }],
-                messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }],
+				messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
+				messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
+				messageD_opacity_in: [0, 1, { start: 0.7, end: 0.8 }],
+				messageA_translateY_in: [20, 0, { start: 0.1, end: 0.2 }],
+				messageB_translateY_in: [20, 0, { start: 0.3, end: 0.4 }],
+				messageC_translateY_in: [20, 0, { start: 0.5, end: 0.6 }],
+				messageD_translateY_in: [20, 0, { start: 0.7, end: 0.8 }],
+				messageA_opacity_out: [1, 0, { start: 0.25, end: 0.3 }],
+				messageB_opacity_out: [1, 0, { start: 0.45, end: 0.5 }],
+				messageC_opacity_out: [1, 0, { start: 0.65, end: 0.7 }],
+				messageD_opacity_out: [1, 0, { start: 0.85, end: 0.9 }],
+				messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }],
+				messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
+				messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
+				messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }]
             }
         },
         {
             // 1
             type:'normal',
-            heightNum:5, // 브라우저 높이의 5배로 scrollHeight 세팅
             scrollHeight: 0,
             objs: {
                 container:document.querySelector('#scroll-section-1')
@@ -58,10 +68,17 @@
     function setLayout() {
         // 각 스크롤 섹션의 높이 세팅
         for(let i = 0; i<sceneInfo.length; i++) {
-            sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+            if(sceneInfo[i].type === 'sticky') {
+                sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+            }
+            else if(sceneInfo[i].type === 'normal') {
+                sceneInfo[i].scrollHeight = sceneInfo[i].objs.container.offsetHeight;
+            }
+
             sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
         }
 
+        YOffset = window.pageYOffset;
         let totalScrollHeight=0;
         for (let i = 0; i<sceneInfo.length; i++) {
             totalScrollHeight +=sceneInfo[i].scrollHeight;
@@ -84,9 +101,9 @@
             // start ~ end 사이에 애니메이션 실행
             const partScrollStart = values[2].start * scrollHeight;
             const partScrollEnd = values[2].end * scrollHeight;
-            const PartScrollHeight = partScrollEnd - partScrollStart;
+            const partScrollHeight = partScrollEnd - partScrollStart;
             if(currentYOffset >= partScrollStart && currentYOffset <= partScrollEnd) {
-                rv = (currentYOffset - partScrollStart) / PartScrollHeight * (values[1] - values[0]) + values[0];
+                rv = (currentYOffset - partScrollStart) /partScrollHeight * (values[1] - values[0]) + values[0];
             }
             else if(currentYOffset < partScrollStart) {
                 rv = values[0];
@@ -96,7 +113,7 @@
             }
         }
         else {
-            rv = scrollRatio * (values[1] - values[0] + values[0]);
+            rv = scrollRatio * (values[1] - values[0]) + values[0];
         }
         return rv;
     }
@@ -112,23 +129,47 @@
 
         switch(currentScene) {
             case 0:
-                // console.log('0 play');
-                let messageA_opacity_in = calcValues(values.messageA_opacity_in, currentYOffset);
-                let messageA_opacity_out = calcValues(values.messageA_opacity_out, currentYOffset);
-                let messageA_translateY_in = calcValues(values.messageA_translateY_in, currentYOffset);
-                let messageA_translateY_out = calcValues(values.messageA_translateY_out, currentYOffset);
+				if (scrollRatio <= 0.22) {
+					// in
+					objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
+					objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
+				} else {
+					// out
+					objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
+					objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
+				}
 
-                if(scrollRatio <= 0.22) {
-                    //in
-                    objs.messageA.style.opacity = messageA_opacity_in;
-                    objs.messageA.style.transform=`translateY(${messageA_translateY_in}%)`;
-                }
-                else {
-                    //out
-                    objs.messageA.style.opacity = messageA_opacity_out;
-                    objs.messageA.style.transform=`translateY(${messageA_translateY_out}%)`;
-                }
-                break;
+				if (scrollRatio <= 0.42) {
+					// in
+					objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
+					objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
+				} else {
+					// out
+					objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
+					objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
+				}
+
+				if (scrollRatio <= 0.62) {
+					// in
+					objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
+					objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
+				} else {
+					// out
+					objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
+					objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
+				}
+
+				if (scrollRatio <= 0.82) {
+					// in
+					objs.messageD.style.opacity = calcValues(values.messageD_opacity_in, currentYOffset);
+					objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_in, currentYOffset)}%, 0)`;
+				} else {
+					// out
+					objs.messageD.style.opacity = calcValues(values.messageD_opacity_out, currentYOffset);
+					objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_out, currentYOffset)}%, 0)`;
+				}
+
+				break;
             case 1:
                 // console.log('1 play');
                 break;

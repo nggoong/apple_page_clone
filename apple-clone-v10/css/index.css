@@ -25,13 +25,13 @@ a {
 }
 
 .global-nav {
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     /* postiion aboust일때는 width를 강제로 넓혀줘야함 */
     height: 44px;
-    padding:0 1rem;
+    padding: 0 1rem;
 }
 
 .global-nav-links,
@@ -45,13 +45,13 @@ a {
 }
 
 .local-nav {
-    position:absolute;
-    top:45px;
-    left:0;
-    width:100%;
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
     height: 52px;
     border-bottom: 1px solid #ddd;
-    padding:0 1rem;
+    padding: 0 1rem;
 }
 
 .global-nav-links {
@@ -60,12 +60,12 @@ a {
 
 .local-nav-links .product-name {
     margin-right: auto;
-    font-size:1.4rem;
+    font-size: 1.4rem;
     font-weight: bold;
 }
 
 .local-nav-links a {
-    font-size:0.8rem;
+    font-size: 0.8rem;
 }
 
 .local-nav-links a:not(.product-name) {
@@ -73,23 +73,23 @@ a {
 }
 
 .scroll-section {
-    padding-top:50vh;
-    border : 1px solid red;
+    padding-top: 50vh;
+    border: 1px solid red;
 }
 
 #scroll-section-0 h1 {
-    font-size:4rem;
-    text-align:center;
+    font-size: 4rem;
+    text-align: center;
 }
 
 .main-message {
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    top:35vh;
-    height:3em;
-    font-size:2.5rem;
-    opacity:0;
+    top: 35vh;
+    height: 3em;
+    font-size: 2.5rem;
+    opacity: 0;
 }
 
 .main-message p {
@@ -99,110 +99,139 @@ a {
 }
 
 #scroll-section-2 .main-message {
-    font-size:3.5rem;
+    font-size: 3.5rem;
 }
 
 .main-message small {
-    display:block;
-    margin-bottom:0.5em;
-    font-size:1rem;
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1rem;
 }
 
 .description {
-    max-width:1000px;
-    margin:0 auto;
-    padding:0 1rem;
-    font-size:1.2rem;
-    color:#888;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    color: #888;
 }
 
 .description strong {
-    font-size:3rem;
-    margin-right:0.2em;
-    color:rgb(29, 29, 31);
-    float:left;
+    font-size: 3rem;
+    margin-right: 0.2em;
+    color: rgb(29, 29, 31);
+    float: left;
 }
 
 .desc-message {
     font-weight: bold;
-    width:50%;
+    width: 50%;
 }
 
 .pin {
-    width:1px;
-    height:100px;
-    background: rgb(29,29,31);
+    width: 1px;
+    height: 100px;
+    background: rgb(29, 29, 31);
+}
+
+#scroll-section-2 .b {
+    top: 10%;
+    left: 40%;
+}
+
+#scroll-section-2.c {
+    top: 15%;
+    left: 45%;
 }
 
 .mid-message {
     max-width: 1000px;
-    margin:0 auto;
-    padding:0 1rem;
-    font-size:2rem;
-    color:#888;
+    margin: 0 auto;
+    padding: 0 1rem;
+    font-size: 2rem;
+    color: #888;
 }
 
 .mid-message strong {
-    color: rgb(29,29,31);
-    display:block;
+    color: rgb(29, 29, 31);
+    display: block;
 }
 
 .canvas-caption {
     max-width: 1000px;
-    margin:0 auto;
-    padding:0 1rem;
-    color:#888;
-    text-align:center;
-    font-size:1.2rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    color: #888;
+    text-align: center;
+    font-size: 1.2rem;
 }
+
 .footer {
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    height:7rem;
-    background:darkorange;
-    color:white;
+    height: 7rem;
+    background: darkorange;
+    color: white;
 }
 
 .sticky-elem {
-    display:none;
-    position:fixed;
-    left:0;
-    width:100%;
+    display: none;
+    position: fixed;
+    left: 0;
+    width: 100%;
 }
+
 #show-scene-0 #scroll-section-0 .sticky-elem,
 #show-scene-1 #scroll-section-1 .sticky-elem,
 #show-scene-2 #scroll-section-2 .sticky-elem,
 #show-scene-3 #scroll-section-3 .sticky-elem {
-    display:block;
+    display: block;
 }
 
 @media (min-width:1024px) {
     #scroll-section-0 h1 {
-        font-size:9vw;
+        font-size: 9vw;
     }
+
     .main-message {
-        font-size:4vw;
+        font-size: 4vw;
     }
+
     .description {
-        font-size:2rem;
+        font-size: 2rem;
     }
+
     .description strong {
-        font-size:6rem;
+        font-size: 6rem;
     }
+
     #scroll-section-2 .main-message {
-        font-size:6vw;
+        font-size: 6vw;
     }
+
     .main-message small {
-        font-size:1.5vw;
+        font-size: 1.5vw;
     }
+
     .desc-message {
-        width:20%;
+        width: 20%;
     }
+
+    #scroll-section-2 .b {
+        top: 20%;
+        left: 53%;
+    }
+
+    #scroll-section-2.c {
+        left: 55%;
+    }
+
     .mid-message {
-        font-size:4vw;
+        font-size: 4vw;
     }
+
     .canvas-caption {
-        font-size:2rem;
+        font-size: 2rem;
     }
 }
