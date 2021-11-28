@@ -29,6 +29,7 @@ a {
     top: 0;
     left: 0;
     width: 100%;
+    z-index:10;
     /* postiion aboust일때는 width를 강제로 넓혀줘야함 */
     height: 44px;
     padding: 0 1rem;
@@ -46,6 +47,7 @@ a {
 
 .local-nav {
     position: absolute;
+    z-index:10;
     top: 45px;
     left: 0;
     width: 100%;
@@ -80,6 +82,7 @@ a {
 #scroll-section-0 h1 {
     font-size: 4rem;
     text-align: center;
+    z-index:1000;
 }
 
 .main-message {
@@ -139,7 +142,7 @@ a {
     left: 40%;
 }
 
-#scroll-section-2.c {
+#scroll-section-2 .c {
     top: 15%;
     left: 45%;
 }
@@ -187,6 +190,10 @@ a {
 #show-scene-2 #scroll-section-2 .sticky-elem,
 #show-scene-3 #scroll-section-3 .sticky-elem {
     display: block;
+}
+
+.sticky-elem-canvas {
+    top:0;
 }
 
 @media (min-width:1024px) {

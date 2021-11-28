@@ -16,9 +16,14 @@
                 messageA: document.querySelector('#scroll-section-0 .main-message.a'),
                 messageB: document.querySelector('#scroll-section-0 .main-message.b'),
                 messageC: document.querySelector('#scroll-section-0 .main-message.c'),
-                messageD: document.querySelector('#scroll-section-0 .main-message.d')
+                messageD: document.querySelector('#scroll-section-0 .main-message.d'),
+                canvas: document.querySelector('#video-canvas-0'),
+                context: document.querySelector('#video-canvas-0').getContext('2d'),
+                videoImages: []
             }, 
             values : {
+                videoImageCount:300,
+                imageSequence: [0, 299],
                 messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
 				messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
 				messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
@@ -51,7 +56,32 @@
             heightNum:5, // 브라우저 높이의 5배로 scrollHeight 세팅
             scrollHeight: 0,
             objs: {
-                container:document.querySelector('#scroll-section-2')
+                container:document.querySelector('#scroll-section-2'),
+                messageA: document.querySelector('#scroll-section-2 .a'),
+				messageB: document.querySelector('#scroll-section-2 .b'),
+				messageC: document.querySelector('#scroll-section-2 .c'),
+				pinB: document.querySelector('#scroll-section-2 .b .pin'),
+				pinC: document.querySelector('#scroll-section-2 .c .pin')
+            },
+            values: {
+                messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
+				messageB_translateY_in: [30, 0, { start: 0.5, end: 0.55 }],
+				messageC_translateY_in: [30, 0, { start: 0.72, end: 0.77 }],
+				messageA_opacity_in: [0, 1, { start: 0.15, end: 0.2 }],
+				messageB_opacity_in: [0, 1, { start: 0.5, end: 0.55 }],
+				messageC_opacity_in: [0, 1, { start: 0.72, end: 0.77 }],
+				messageA_translateY_out: [0, -20, { start: 0.3, end: 0.35 }],
+				messageB_translateY_out: [0, -20, { start: 0.58, end: 0.63 }],
+				messageC_translateY_out: [0, -20, { start: 0.85, end: 0.9 }],
+				messageA_opacity_out: [1, 0, { start: 0.3, end: 0.35 }],
+				messageB_opacity_out: [1, 0, { start: 0.58, end: 0.63 }],
+				messageC_opacity_out: [1, 0, { start: 0.85, end: 0.9 }],
+				pinB_scaleY: [0.5, 1, { start: 0.5, end: 0.55 }],
+				pinC_scaleY: [0.5, 1, { start: 0.72, end: 0.77 }],
+				pinB_opacity_in: [0, 1, { start: 0.5, end: 0.55 }],
+				pinC_opacity_in: [0, 1, { start: 0.72, end: 0.77 }],
+				pinB_opacity_out: [1, 0, { start: 0.58, end: 0.63 }],
+				pinC_opacity_out: [1, 0, { start: 0.85, end: 0.9 }]
             }
         },
         {
@@ -64,6 +94,15 @@
             }
         },
     ];
+
+    function setCanvasImages() {
+        let imgElem;
+        for(let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
+            imgElem = new Image();
+            imgElem.src=`./video/001/IMG_${6726 + i}.JPG`;
+            sceneInfo[0].objs.videoImages.push(imgElem);
+        }
+    }
 
     function setLayout() {
         // 각 스크롤 섹션의 높이 세팅
@@ -81,7 +120,7 @@
         YOffset = window.pageYOffset;
         let totalScrollHeight=0;
         for (let i = 0; i<sceneInfo.length; i++) {
-            totalScrollHeight +=sceneInfo[i].scrollHeight;
+            totalScrollHeight += sceneInfo[i].scrollHeight;
             if(totalScrollHeight >= YOffset) {
                 currentScene = i;
                 break;
@@ -103,7 +142,7 @@
             const partScrollEnd = values[2].end * scrollHeight;
             const partScrollHeight = partScrollEnd - partScrollStart;
             if(currentYOffset >= partScrollStart && currentYOffset <= partScrollEnd) {
-                rv = (currentYOffset - partScrollStart) /partScrollHeight * (values[1] - values[0]) + values[0];
+                rv = (currentYOffset - partScrollStart) / partScrollHeight * (values[1] - values[0]) + values[0];
             }
             else if(currentYOffset < partScrollStart) {
                 rv = values[0];
@@ -129,6 +168,10 @@
 
         switch(currentScene) {
             case 0:
+                let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+                objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+
+
 				if (scrollRatio <= 0.22) {
 					// in
 					objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
@@ -170,11 +213,43 @@
 				}
 
 				break;
-            case 1:
-                // console.log('1 play');
-                break;
+        
             case 2:
                 // console.log('2 play');
+
+				if (scrollRatio <= 0.25) {
+					// in
+					objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
+					objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
+				} else {
+					// out
+					objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
+					objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
+				}
+
+				if (scrollRatio <= 0.57) {
+					// in
+					objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
+					objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
+					objs.pinB.style.transform = `scaleY(${calcValues(values.pinB_scaleY, currentYOffset)})`;
+				} else {
+					// out
+					objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
+					objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
+					objs.pinB.style.transform = `scaleY(${calcValues(values.pinB_scaleY, currentYOffset)})`;
+				}
+
+				if (scrollRatio <= 0.83) {
+					// in
+					objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
+					objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
+					objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
+				} else {
+					// out
+					objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
+					objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
+					objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
+				}
                 break;
             case 3:
                 // console.log('3 play');
@@ -212,7 +287,10 @@
         scrollLoop();
     })
     // window.addEventListener('DOMcontentLoaded', setLayout) 실행 시점이 load보다 빠름 이미지가 로드 되기 전에 HTML 돔 구조만 끝나면 로드를 시작하기 때문에..
-    window.addEventListener('load', setLayout);
+    window.addEventListener('load', ()=> {
+        setLayout();
+        setCanvasImages();
+    });
     window.addEventListener('resize', setLayout);
 
 })();
