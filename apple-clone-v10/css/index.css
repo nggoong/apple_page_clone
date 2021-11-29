@@ -80,6 +80,8 @@ a {
 }
 
 #scroll-section-0 h1 {
+    position: relative;
+    top: -10vh;
     font-size: 4rem;
     text-align: center;
     z-index:1000;
@@ -195,7 +197,6 @@ a {
 .sticky-elem-canvas {
     top:0;
     height: 100%;
-    /* background:gray; */
 }
 
 .sticky-elem-canvas canvas {

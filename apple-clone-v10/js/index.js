@@ -24,6 +24,7 @@
             values : {
                 videoImageCount:300,
                 imageSequence: [0, 299],
+                canvas_opacity: [1, 0, { start:0.9, end:1 }],
                 messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
 				messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
 				messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
@@ -39,7 +40,7 @@
 				messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }],
 				messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
 				messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
-				messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }]
+				messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }],
             }
         },
         {
@@ -173,6 +174,7 @@
             case 0:
                 let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
                 objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+                objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
 
 
 				if (scrollRatio <= 0.22) {
@@ -293,6 +295,8 @@
     window.addEventListener('load', ()=> {
         setLayout();
         setCanvasImages();
+        sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+        
     });
     window.addEventListener('resize', setLayout);
 
