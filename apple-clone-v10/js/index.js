@@ -324,8 +324,8 @@
 
 
                 //캔버스 사이즈에 맞춰 가정한 innerWidth와 innerHeight
-                const recalculatedInnerWidth = window.innerHeight / canvasScaleRatio;
-                const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+                const recalculatedInnerWidth = document.body.offsetHeight / canvasScaleRatio;
+                const recalculatedInnerHeight = document.body.offsetHeight / canvasScaleRatio;
                 if(!values.rectStartY) {
                     values.rectStartY = objs.canvas.getBoundingClientRect().top;
                     console.log(values.rectStartY);
