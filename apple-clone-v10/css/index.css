@@ -211,6 +211,7 @@ a {
 } */
 
 #scroll-section-3 {
+    position:relative;
     display:flex;
     flex-direction: column;
     align-items: center;

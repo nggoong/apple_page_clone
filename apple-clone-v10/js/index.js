@@ -320,20 +320,22 @@
                 }
 
                 objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+                objs.context.fillStyle = 'white';
                 objs.context.drawImage(objs.images[0], 0, 0);
 
 
                 //캔버스 사이즈에 맞춰 가정한 innerWidth와 innerHeight
-                const recalculatedInnerWidth = document.body.offsetHeight / canvasScaleRatio;
-                const recalculatedInnerHeight = document.body.offsetHeight / canvasScaleRatio;
-                if(!values.rectStartY) {
-                    values.rectStartY = objs.canvas.getBoundingClientRect().top;
-                    console.log(values.rectStartY);
-                    values.rect1X[2].end = values.rectStartY / scrollHeight;
-                    values.rect2X[2].end = values.rectStartY / scrollHeight;
-                    
-                }
-                
+                const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
+                const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+
+                if (!values.rectStartY) {
+					// values.rectStartY = objs.canvas.getBoundingClientRect().top;
+					values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2;
+					values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight;
+					values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight;
+					values.rect1X[2].end = values.rectStartY / scrollHeight;
+					values.rect2X[2].end = values.rectStartY / scrollHeight;
+				}
 
                 const whiteRectWidth = recalculatedInnerWidth * 0.15;
                 values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2
@@ -344,13 +346,21 @@
                 // 좌우 박스 그리기
                 // objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height);
                 // objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height);
-                objs.context.fillRect(calcValues(values.rect1X, currentYOffset), 0, parseInt(whiteRectWidth), objs.canvas.height);
-                objs.context.fillRect(calcValues(values.rect2X, currentYOffset), 0, parseInt(whiteRectWidth), objs.canvas.height);
+                objs.context.fillRect(
+					parseInt(calcValues(values.rect1X, currentYOffset)),
+					0,
+					parseInt(whiteRectWidth),
+					objs.canvas.height
+				);
+				objs.context.fillRect(
+					parseInt(calcValues(values.rect2X, currentYOffset)),
+					0,
+					parseInt(whiteRectWidth),
+					objs.canvas.height
+				);
 
-                console.log(window.innerHeight);
-                console.log(window.innerWidth);
-                // console.log(recalculatedInnerHeight);
-                // console.log(recalculatedInnerWidth);
+                console.log(recalculatedInnerHeight);
+                console.log(recalculatedInnerWidth);
                 break;
         }
     }
