@@ -302,6 +302,7 @@
 				}
                 break;
             case 3:
+                let step = 0
                 // console.log('3 play');
                 // 가로, 세로 모두 꽉 차게 하기 위해 여기서 세팅(계산이 필요)
                 const widthRatio = window.innerWidth / objs.canvas.width;
@@ -358,9 +359,17 @@
 					parseInt(whiteRectWidth),
 					objs.canvas.height
 				);
-
-                console.log(recalculatedInnerHeight);
-                console.log(recalculatedInnerWidth);
+                if(scrollRatio < values.rect1X[2].end) {
+                    step = 1;
+                    console.log('캔버스 닿기 전');
+                    objs.canvas.classList.remove('sticky');
+                }
+                else {
+                    step = 2
+                    console.log('블렌드');
+                    objs.canvas.classList.add('sticky');
+                    objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+                }
                 break;
         }
     }
