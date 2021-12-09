@@ -111,6 +111,7 @@
             values: {
                 rect1X: [0, 0, {start: 0, end: 0}],
                 rect2X: [0, 0, {start: 0, end: 0}],
+                blendHeight: [0, 0, {start: 0, end: 0}],
                 rectStartY: 0
             }
         },
@@ -301,6 +302,7 @@
 					objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
 				}
                 break;
+
             case 3:
                 let step = 0
                 // console.log('3 play');
@@ -359,6 +361,7 @@
 					parseInt(whiteRectWidth),
 					objs.canvas.height
 				);
+                
                 if(scrollRatio < values.rect1X[2].end) {
                     step = 1;
                     console.log('캔버스 닿기 전');
@@ -366,7 +369,19 @@
                 }
                 else {
                     step = 2
-                    console.log('블렌드');
+                    // console.log('블렌드');
+                    values.blendHeight[0] = 0;
+					values.blendHeight[1] = objs.canvas.height;
+					values.blendHeight[2].start = values.rect1X[2].end;
+					values.blendHeight[2].end = values.blendHeight[2].start + 0.2;
+					const blendHeight = calcValues(values.blendHeight, currentYOffset);
+
+					objs.context.drawImage(objs.images[1],
+						0, objs.canvas.height - blendHeight, objs.canvas.width, blendHeight,
+						0, objs.canvas.height - blendHeight, objs.canvas.width, blendHeight
+					);
+
+
                     objs.canvas.classList.add('sticky');
                     objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
                 }
