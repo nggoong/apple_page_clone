@@ -103,7 +103,8 @@
                 canvas:document.querySelector('.image-blend-canvas'),
                 context: document.querySelector('.image-blend-canvas').getContext('2d'),
                 imagePath: [
-                    './images/blend-image-1.jpg',
+                    // './images/blend-image-1.jpg',
+                    './images/intro.jpg',
                     './images/blend-image-2.jpg',
                 ],
                 images: []
@@ -112,6 +113,7 @@
                 rect1X: [0, 0, {start: 0, end: 0}],
                 rect2X: [0, 0, {start: 0, end: 0}],
                 blendHeight: [0, 0, {start: 0, end: 0}],
+                canvas_scale: [0, 0, {start: 0, end: 0}],
                 rectStartY: 0
             }
         },
@@ -213,7 +215,7 @@
                 objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset);
 
 
-				if (scrollRatio <= 0.22) {
+				if (scrollRatio <= 0.16) {
 					// in
 					objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
 					objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
@@ -384,6 +386,17 @@
 
                     objs.canvas.classList.add('sticky');
                     objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+
+                    if(scrollRatio > values.blendHeight[2].end) {
+                        values.canvas_scale[0] = canvasScaleRatio;
+                        values.canvas_scale[1] = document.body.offsetWidth / (1.5 * objs.canvas.width);
+
+                        values.canvas_scale[2].start = values.blendHeight[2].end;
+                        values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
+
+                        objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`;
+                        
+                    }
                 }
                 break;
         }
