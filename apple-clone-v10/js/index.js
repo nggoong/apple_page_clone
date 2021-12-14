@@ -365,17 +365,16 @@
 				);
                 
                 if(scrollRatio < values.rect1X[2].end) {
-                    step = 1;
                     console.log('캔버스 닿기 전');
                     objs.canvas.classList.remove('sticky');
                 }
                 else {
-                    step = 2
                     // console.log('블렌드');
                     values.blendHeight[0] = 0;
 					values.blendHeight[1] = objs.canvas.height;
 					values.blendHeight[2].start = values.rect1X[2].end;
 					values.blendHeight[2].end = values.blendHeight[2].start + 0.2;
+                    console.log(scrollRatio);
 					const blendHeight = calcValues(values.blendHeight, currentYOffset);
 
 					objs.context.drawImage(objs.images[1],
@@ -395,7 +394,12 @@
                         values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
 
                         objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`;
+                        objs.canvas.style.marginTop = 0;
                         
+                        if(scrollRatio > values.canvas_scale[2].end) {
+                            objs.canvas.classList.remove('sticky');
+                            objs.canvas.style.marginTop=`${scrollHeight * 0.4}px`;
+                        }
                     }
                 }
                 break;
